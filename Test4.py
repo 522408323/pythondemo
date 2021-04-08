@@ -90,5 +90,66 @@ def fun11():
 
 print(fun11()) # 25
 
-#lambda表达式
+'''
+lambda表达式
+'''
+#示例一
+def dd1(x):
+    return x + 1
+print(dd1(10))
 
+ddd1 = lambda x: x+1
+print(ddd1(10))
+#示例二
+def dd2(x,y):
+    return x + y
+print(dd2(1,2))
+ddd2 = lambda x,y : x + y
+print(ddd2(1,2))
+
+'''
+filter(function or None, iterable)
+过滤出符合条件的元素
+如果function为None，则返回为true的元素。
+如果function是某个函数，则返回符合该函数结果不为False或0定义的元素
+'''
+#示例一，将数组中为true的元素过滤出来
+a = filter(None,[1,0,False,True])
+print(list(a)) # [1, True]
+
+#示例二，将数组中每个元素都赋值给add函数的x得到的计算结果不是0的过滤出来
+def add(x):
+    return x % 2
+b = filter(add,range(10))# range(10)是1到9数组
+print(list(b)) # 结果为 [1, 3, 5, 7, 9]
+
+'''
+map(func, *iterables) 
+将数组中每个元素在函数中处理后展示出来
+'''
+def add1(x):
+    return x + 1
+m = map(add1,[1,2,3,4,5])
+print(list(m))# 结果为 [2, 3, 4, 5, 6]
+
+'''
+字典，映射类型
+1.格式：{key:value,key:value,...}
+2.使用自带函数dict()
+'''
+#示例一
+dic = {1:'张三',2:'李四'}
+print(dic[1])#张三
+#示例二
+dic = {'one':'张三','two':'李四'}
+print(dic['two'])#李四
+#示例3 ，使用dict函数，key不能是数字
+ccc = dict(a="哈哈", b="呵呵")
+print(ccc) # {'a': '哈哈', 'b': '呵呵'}
+
+#示例4
+ccc = dict(( ('1','a'),('2','b'),('3','c') ))
+print(ccc) #{'1': 'a', '2': 'b', '3': 'c'}
+
+ccc['1'] = "呵呵"
+print(ccc) # {'1': '呵呵', '2': 'b', '3': 'c'}
