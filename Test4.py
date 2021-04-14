@@ -153,3 +153,66 @@ print(ccc) #{'1': 'a', '2': 'b', '3': 'c'}
 
 ccc['1'] = "呵呵"
 print(ccc) # {'1': '呵呵', '2': 'b', '3': 'c'}
+
+#示例5，获取所有key，打印结果：1 2 3
+for key in ccc.keys():
+    print(key,end=" ")
+#示例6，获取所有value，打印结果：呵呵 b c
+for value in ccc.values():
+    print(value,end=" ")
+print()
+#示例6，获取所有元素，打印key和value
+for i in ccc.items():
+    print(i," ",i[0]," ", i[1])
+'''
+('1', '呵呵')   1   呵呵
+('2', 'b')   2   b
+('3', 'c')   3   c
+'''
+#示例7，获取不存在key的值
+print(ccc.get('6'))# None
+print(ccc.get('6',"空"))# 空 ，第2个参数为不存在时给定一个默认值
+
+#清空字典
+#ccc.clear()
+
+#浅拷贝copy()
+ccd = ccc.copy()
+print(id(ccd),id(ccc)) # 2861038148480 2861038148608
+
+print(ccc.pop('3')) # c 剔除某个key的元素
+
+#更新或新增某个元素，key存在则更新，key不存在则新增
+ccc.update({"2":"111"})
+print(ccc) # {'1': '呵呵', '2': '111'}
+
+'''
+集合 set 无序，元素不重复
+格式：
+1:{obj,obj,...}
+2:set()
+'''
+#示例1
+n1 = {1,2,3,4}
+print(type(n1)) # <class 'set'>
+#示例2
+n2 = set([1,2,3,4,5])
+print(type(n2)) # <class 'set'>
+#示例3，元素不重复，无序
+n3 = {2,2,3,4,0}
+print(n3) #{0, 2, 3, 4}
+
+print(2 in n3) # True 判断集合中是否存在2
+# 示例4 ，添加元素，删除元素
+n3.add(9)
+print(n3) #{0, 2, 3, 4, 9}
+n3.remove(9)
+print(n3) #{0, 2, 3, 4}
+
+'''
+不可变集合 frozen
+该集合没有add() remove()等修改操作方法
+'''
+n4 = frozenset([6,7,8,9])
+print(n4) #frozenset({8, 9, 6, 7})
+
