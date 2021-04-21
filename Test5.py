@@ -79,3 +79,41 @@ test.txt内容被覆盖为下面内容：
 f.writelines("123123313131313")
 f.writelines("方法撒")
 f.writelines("发发发发发发")
+f.close()
+'''
+一个小实例，
+test2.txt的内容：
+A：您好
+B：您有什么事
+A：我想问个路
+B：您打算去哪
+
+使用语法：
+split(指定分隔符,<分割次数,默认为 -1,即分隔所有>)
+
+效果如下：
+a.txt:
+您好
+我想问个路
+
+b.txt:
+您有什么事
+您打算去哪
+'''
+f = open("D:\\test2.txt",mode='r',encoding='utf8')
+
+file_a = open("D:\\a.txt",mode='w',encoding='utf8')
+file_b = open("D:\\b.txt",mode='w',encoding='utf8')
+for each in f:
+    [role,content] = each.split("：",1)
+    if role == 'A':
+        file_a.writelines(content)
+    elif role == 'B':
+        file_b.writelines(content)
+
+file_a.close()
+file_b.close()
+f.close()
+print("分割结束")
+
+
