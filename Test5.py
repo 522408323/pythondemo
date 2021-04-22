@@ -117,3 +117,9 @@ f.close()
 print("分割结束")
 
 
+'''
+with 可以自动关闭文件流,不用再调用close()方法
+'''
+with open("D:\\a.txt",mode='r',encoding='utf8') as k:
+    for line in k:
+        print(line)

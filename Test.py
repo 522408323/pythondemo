@@ -54,3 +54,22 @@ if __name__ == '__main__':
 # else:
 #     print("非2")
 
+
+'''
+while(条件):
+    代码块
+else:
+    代码块
+'''
+
+num= int(input("输入一个整数："))
+count = num //2
+
+while count > 1:
+    print(count)
+    if num % count == 0:
+        print("%d最大约数是%d" % (num,count))
+        break
+    count -=1
+else:
+    print("%d是素数！" %num)
