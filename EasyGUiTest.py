@@ -65,3 +65,4 @@ PROPORTIONAL_FONT_FAMILY = ("MS", "Sans", "Serif")
 def _ _choicebox下边的root_width=int((screen_width * 0.8))和root_height=int((screen_height * 0.5))
 分别改为root_width=int((screen_width * 0.4))和 root_height=int((screen_height * 0.25))
 '''
+
