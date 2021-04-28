@@ -169,3 +169,108 @@ qq = TryInt2(3)
 ww = TryInt2(5)
 print('qq + ww = ',qq + ww) # qq + ww =  8，return后面直接调用父类int的add方法，不会调用TryInt2()中的add方法，不会无限循环
 
+#=================================================
+'''
+类的部分内置方法
+__getattr__(self,name) 当用户试图获取一个不存在的属性时会自动调用该方法
+__getattribute__(self,name) 当该类的属性被访问时会自动调用该方法，优先这个方法，当找不到属性时会调用getattr方法
+__setattr__(self,name,value) 当一个属性被赋值时会自动调用该方法
+__delattr__(self,name) 当一个属性被删除时会自动调用该方法
+'''
+class AA:
+    def __getattribute__(self, item):
+        print("__getattribute__")
+        return super().__getattribute__(item)
+    def __getattr__(self, item):
+        print("__getattr__")
+    def __setattr__(self, key, value):
+        print("__setattr__")
+        super().__setattr__(key,value)
+    def __delattr__(self, item):
+        print("__delattr__")
+        super().__delattr__(item)
+
+aa = AA()
+aa.x
+'''
+上面结果：
+__getattribute__
+__getattr__
+'''
+aa.x = 1
+'''
+上面结果：
+__setattr__
+'''
+aa.x
+'''
+上面结果：
+__getattribute__
+'''
+
+#=========================================================
+'''
+描述器Descriptor，拥有下面方法的类只能是其实例属于其他类属性的时候生效
+__get__(self, instance, owner)
+__set__(self, instance, value)
+__delete__(self, instance)
+'''
+class BB:
+    def __get__(self, instance, owner):
+        print("get...",self,instance,owner)
+    def __set__(self, instance, value):
+        print("set...",self,instance,value)
+    def __delete__(self, instance):
+        print("delete...",self,instance)
+class Test:
+    x = BB()
+
+test = Test()
+#下面结果：get... <__main__.BB object at 0x0000028746FD70A0> <__main__.Test object at 0x0000028746FD4FA0> <class '__main__.Test'>
+test.x
+#下面结果：set... <__main__.BB object at 0x0000028746FD70A0> <__main__.Test object at 0x0000028746FD4FA0> abc
+test.x = 'abc'
+#下面结果：delete... <__main__.BB object at 0x0000028746FD70A0> <__main__.Test object at 0x0000028746FD4FA0>
+del test.x
+
+#============================================
+print("======================================")
+'''
+模拟property实现代码
+'''
+
+class MyProperty:
+    def __init__(self,fget=None, fset=None, fdel=None):
+        self.fget = fget
+        self.fset = fset
+        self.fdel = fdel
+    def __get__(self, instance, owner):
+        #下面一行代码等同于 MyProperty实例对象.getSize(instance) ,其中instance代表类CCC实例对象ccc
+        #关键是外部参数传入的是函数方法，相当于MyProperty中也有一个getSize(object)方法，只不过object对象对应的是CCC的实例对象
+        print("Property get",self,instance,owner)
+        return self.fget(instance)
+    def __set__(self, instance, value):
+        print("Property set",self,instance,value)
+        self.fset(instance,value)
+    def __delete__(self, instance):
+        print("Property delete",self,instance)
+        self.fdel(instance)
+
+class CCC:
+    def __init__(self,size=10):
+        self.size = size
+    def getSize(self):
+        return self.size
+    def setSize(self,v):
+        self.size = v
+    def delSize(self):
+        del self.size
+    x = MyProperty(getSize,setSize,delSize)
+
+ccc = CCC()
+print(ccc.x)
+ccc.x = 18
+print(ccc.x)
+
+#============================================
+print("======================================")
