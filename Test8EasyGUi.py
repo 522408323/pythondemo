@@ -45,15 +45,15 @@ import easygui as g
 #第一个例子
 import sys
 
-while 1:
-    g.msgbox("欢迎进入第一个界面")
-    choice = g.choicebox('请选择一个爱好','互动界面',['看电视','看电影','看小说','看动漫'])
-
-    g.msgbox('你的选择是：'+str(choice),'结果')
-    if g.ccbox('你希望重新再开始么？','请选择'):#ccbox 展示 continue/cancel两个按钮
-        pass#选择继续
-    else:
-        sys.exit(0)#选择结束
+# while 1:
+#     g.msgbox("欢迎进入第一个界面")
+#     choice = g.choicebox('请选择一个爱好','互动界面',['看电视','看电影','看小说','看动漫'])
+#
+#     g.msgbox('你的选择是：'+str(choice),'结果')
+#     if g.ccbox('你希望重新再开始么？','请选择'):#ccbox 展示 continue/cancel两个按钮
+#         pass#选择继续
+#     else:
+#         sys.exit(0)#选择结束
 
 '''
 修改默认配置
@@ -66,3 +66,38 @@ def _ _choicebox下边的root_width=int((screen_width * 0.8))和root_height=int(
 分别改为root_width=int((screen_width * 0.4))和 root_height=int((screen_height * 0.25))
 '''
 
+'''
+实现一个填写信息界面
+'''
+# import easygui as g
+# msg = "请填写以下联系方式"
+# title = "账号中心"
+# fieldNames = [' *用户名',' *真实姓名',' *固定电话',' *手机号码']
+# filedValues = []
+# filedValues = g.multenterbox(msg,title,fieldNames)
+#
+# while 1:
+#     if filedValues == None:
+#         break
+#     errMsg = ""
+#     for i in range(len(filedValues)):
+#         option = fieldNames[i].strip()
+#         if filedValues[i].strip() == "" and option[0] == "*":
+#             errMsg +=('[%s]为必填项。\n\n' % fieldNames[i])
+#     if errMsg == "":
+#         break
+#     filedValues = g.multenterbox(errMsg,title,fieldNames,filedValues)
+# print("用户资料如下：%s" % str(filedValues))
+
+'''
+提供一个文件夹浏览框，让用户选择需要打开的文本文件，打开并显示文件内容
+'''
+import easygui as g
+import os
+
+filePath = g.fileopenbox(default="*.txt")
+with open(filePath) as f:
+    title = os.path.basename(filePath)
+    msg = "文件【%s】的内容如下：" % title
+    text = f.read()
+    g.textbox(msg,title,text)
