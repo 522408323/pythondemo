@@ -63,10 +63,37 @@ import time as t
 # print(html)
 
 #调用百度翻译
+# url = "https://fanyi.baidu.com/sug"
+# data = {}
+# data['kw'] = 'hello'
+# data = parse.urlencode(data).encode("utf-8")
+# response = req.urlopen(url,data)
+# html = response.read().decode('unicode_escape')
+# print(html)
+
+#添加请求头的操作
 url = "https://fanyi.baidu.com/sug"
+head={}#请求头
+head['User-Agent']='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212'
 data = {}
 data['kw'] = 'hello'
 data = parse.urlencode(data).encode("utf-8")
-response = req.urlopen(url,data)
+request = req.Request(url,data,head)
+#也可以用add_headers()添加head信息
+#request = req.Request(url,data)
+#request.add_header(head)
+response = req.urlopen(request)
 html = response.read().decode('unicode_escape')
 print(html)
+
+'''
+代理
+1.参数是一个字典{'类型(http/https)':'代理ip:端口号'}
+proxy_support=urllib.request.ProxyHandler({})
+2.定制一个opener
+opener = urllib.request.build_opener(proxy_support)
+3.安装opener
+urllib.request.install_opener(opener)
+4.调用opener
+opener.open(url)
+'''
